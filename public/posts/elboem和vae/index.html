@@ -5,29 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>ELBO，EM和VAE | Zifan Ying</title>
-<meta name="keywords" content="VAE">
-<meta name="description" content="证据下界 ELBO
-在最大似然估计（Maximum Likelihood Estimation,
-MLE）中，目标是最大化观测数据 $x$ 的对数似然.
-参数 $\theta$ 的对数似然（log likelihood）的定义为
-$$\ell(\theta) = \log p_{\theta}(x) = \log\sum_{z}p_{\theta}(x,z),$$其中 $x$ 是观测变量，$z$ 是潜在变量. 根据 Jensen 不等式，对于任意分布
-$q(z)$，有
-$$
-\begin{aligned}
-\ell(\theta) &= \log\sum_{z}p_{\theta}(x,z) = \log\sum_{z}q(z)\frac{p_{\theta}(x,z)}{q(z)} = \log{\mathbb{E}}_{z \sim q}\left\lbrack \frac{p_{\theta}(x,z)}{q(z)} \right\rbrack \\
- &\geq {\mathbb{E}}_{z \sim q}\left\lbrack \log\frac{p_{\theta}(x,z)}{q(z)} \right\rbrack = {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack
-\end{aligned}
-$$由此定义 $\ell(\theta)$ 的证据下界（Evidence Lower BOund, ELBO）$\mathcal{F}$:
-$$
-\ell(\theta) \geq \mathcal{F}(q,\theta) \equiv {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack.
-$$取等条件
-Jensen 不等式能够取等，当且仅当对于所有 $z$,
-$\frac{p_{\theta}(x,z)}{q(z)}$
-为常数 $c$.
-因此">
+<title>ELBO，EM和VAE | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="dddddddeeeeeeeeeeesssssss">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/my-first-post/">
+<link rel="canonical" href="http://localhost:1313/posts/elboem%E5%92%8Cvae/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
@@ -36,7 +18,7 @@ $\frac{p_{\theta}(x,z)}{q(z)}$
 <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/my-first-post/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/elboem%E5%92%8Cvae/">
 <noscript>
     <style>
         #theme-toggle,
@@ -89,32 +71,12 @@ $\frac{p_{\theta}(x,z)}{q(z)}$
     }
 
 </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js" integrity="sha384-2B8pfmZZ6JlVoScJm/5hQfNS2TI/6hPqDZInzzPc8oHpN5SgeNOf4LzREO6p5YtZ" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        renderMathInElement(document.body, {
-          
-          
-          delimiters: [
-              {left: '$$', right: '$$', display: true},
-              {left: '$', right: '$', display: false},
-              {left: '\\(', right: '\\)', display: false},
-              {left: '\\[', right: '\\]', display: true}
-          ],
-          
-          throwOnError : false
-        });
-    });
-</script>
-
 </head>
 <body id="top">
     <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Zifan Ying (Alt + H)">Zifan Ying</a>
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -150,7 +112,10 @@ $\frac{p_{\theta}(x,z)}{q(z)}$
     <h1 class="post-title entry-hint-parent">
       ELBO，EM和VAE
     </h1>
-    <div class="post-meta"><span title='2025-12-26 02:14:14.028 +0000 UTC'>December 26, 2025</span>
+    <div class="post-description">
+      dddddddeeeeeeeeeeesssssss
+    </div>
+    <div class="post-meta"><span title='2025-12-25 19:34:50 -0600 CST'>December 25, 2025</span>
 
 </div>
   </header> 
@@ -158,107 +123,125 @@ $\frac{p_{\theta}(x,z)}{q(z)}$
 <p>在最大似然估计（Maximum Likelihood Estimation,
 MLE）中，目标是最大化观测数据 $x$ 的对数似然.</p>
 <p>参数 $\theta$ 的对数似然（log likelihood）的定义为</p>
-$$\ell(\theta) = \log p_{\theta}(x) = \log\sum_{z}p_{\theta}(x,z),$$<p>其中 $x$ 是观测变量，$z$ 是潜在变量. 根据 Jensen 不等式，对于任意分布
+<p>$$\ell(\theta) = \log p_{\theta}(x) = \log\sum_{z}p_{\theta}(x,z),$$</p>
+<p>其中 $x$ 是观测变量，$z$ 是潜在变量. 根据 Jensen 不等式，对于任意分布
 $q(z)$，有</p>
-$$
+<p>$$
 \begin{aligned}
-\ell(\theta) &= \log\sum_{z}p_{\theta}(x,z) = \log\sum_{z}q(z)\frac{p_{\theta}(x,z)}{q(z)} = \log{\mathbb{E}}_{z \sim q}\left\lbrack \frac{p_{\theta}(x,z)}{q(z)} \right\rbrack \\
- &\geq {\mathbb{E}}_{z \sim q}\left\lbrack \log\frac{p_{\theta}(x,z)}{q(z)} \right\rbrack = {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack
+\ell(\theta) &amp;= \log\sum_{z}p_{\theta}(x,z) = \log\sum_{z}q(z)\frac{p_{\theta}(x,z)}{q(z)} = \log{\mathbb{E}}<em>{z \sim q}\left\lbrack \frac{p</em>{\theta}(x,z)}{q(z)} \right\rbrack \
+&amp;\geq {\mathbb{E}}<em>{z \sim q}\left\lbrack \log\frac{p</em>{\theta}(x,z)}{q(z)} \right\rbrack = {\mathbb{E}}<em>{z \sim q}\left\lbrack \log p</em>{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack
 \end{aligned}
-$$<p>由此定义 $\ell(\theta)$ 的证据下界（Evidence Lower BOund, ELBO）$\mathcal{F}$:</p>
-$$
-\ell(\theta) \geq \mathcal{F}(q,\theta) \equiv {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack.
-$$<h2 id="取等条件">取等条件<a hidden class="anchor" aria-hidden="true" href="#取等条件">#</a></h2>
+$$</p>
+<p>由此定义 $\ell(\theta)$ 的证据下界（Evidence Lower BOund, ELBO）$\mathcal{F}$:</p>
+<p>$$
+\ell(\theta) \geq \mathcal{F}(q,\theta) \equiv {\mathbb{E}}<em>{z \sim q}\left\lbrack \log p</em>{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack.
+$$</p>
+<h2 id="取等条件">取等条件<a hidden class="anchor" aria-hidden="true" href="#取等条件">#</a></h2>
 <p>Jensen 不等式能够取等，当且仅当对于所有 $z$,
 $\frac{p_{\theta}(x,z)}{q(z)}$
 为常数 $c$.
 因此</p>
-$$
+<p>$$
 \begin{aligned}
-p_{\theta}(x) &= \sum_{z}p_{\theta}(x,z) = c\sum_{z}q(z) = c \\
-q(z) &= \frac{p_{\theta}(x,z)}{p_{\theta}(x)} = p_{\theta}\left( z|x \right).
+p_{\theta}(x) &amp;= \sum_{z}p_{\theta}(x,z) = c\sum_{z}q(z) = c \
+q(z) &amp;= \frac{p_{\theta}(x,z)}{p_{\theta}(x)} = p_{\theta}\left( z\vert x \right).
 \end{aligned}
-$$<p>这里的 $q(z)$ 可以是任意分布，但使用中常用
-$q(z) = q_{\varphi}\left( z|x \right)$，即 $z$
+$$</p>
+<p>这里的 $q(z)$ 可以是任意分布，但使用中常用
+$q(z) = q_{\varphi}\left( z\vert x \right)$，即 $z$
 的<strong>近似后验分布</strong>，而近似后验分布越接近<strong>真实后验分布</strong>
-$p_{\theta}\left( z|x \right)$，ELBO 越接近对数似然.</p>
+$p_{\theta}\left( z\vert x \right)$，ELBO 越接近对数似然.</p>
 <h1 id="kl散度">KL散度<a hidden class="anchor" aria-hidden="true" href="#kl散度">#</a></h1>
 <p>任意分布 $p(x)$ 的信息熵定义为</p>
-$$H(p) = {\mathbb{E}}_{x \sim p}\left\lbrack - \log p(x) \right\rbrack$$<p>即对随机事件编码长度的期望值. 如果认为 $x$ 服从另一分布 $q(x)$，在&quot;真实&quot;分布 $p(x)$
+<p>$$H(p) = {\mathbb{E}}_{x \sim p}\left\lbrack - \log p(x) \right\rbrack$$</p>
+<p>即对随机事件编码长度的期望值. 如果认为 $x$ 服从另一分布 $q(x)$，在&quot;真实&quot;分布 $p(x)$
 下的编码长度期望值定义为交叉熵：</p>
-$$H(p,q) = {\mathbb{E}}_{x \sim p}\left\lbrack - \log q(x) \right\rbrack.$$<p>KL散度即定义为“额外的”编码长度</p>
-$$\text{ KL}\left( p\|q \right) = H(p,q) - H(p) = {\mathbb{E}}_{x \sim p}\left\lbrack \log p(x) - \log q(x) \right\rbrack.$$<blockquote>
+<p>$$H(p,q) = {\mathbb{E}}_{x \sim p}\left\lbrack - \log q(x) \right\rbrack.$$</p>
+<p>KL散度即定义为“额外的”编码长度</p>
+<p>$$\text{ KL}\left( p\Vert q \right) = H(p,q) - H(p) = {\mathbb{E}}_{x \sim p}\left\lbrack \log p(x) - \log q(x) \right\rbrack.$$</p>
+<blockquote>
 <p>KL散度描述了两个分布的差异程度，但是不是距离度量，因为不满足对称性和三角不等式.</p>
 </blockquote>
 <h2 id="kl-散度的非负性">KL 散度的非负性<a hidden class="anchor" aria-hidden="true" href="#kl-散度的非负性">#</a></h2>
-<p>对于任意分布 $p(x)$ 和 $q(x)$，有 $\text{KL}(p \|q) \ge 0$，因为</p>
-$$
+<p>对于任意分布 $p(x)$ 和 $q(x)$，有 $\text{KL}(p \Vert q) \ge 0$，因为</p>
+<p>$$
 \begin{aligned}
-\text{ KL}\left( p\|q \right) & = {\mathbb{E}}_{x \sim p}\left\lbrack \log p(x) - \log q(x) \right\rbrack \\
- & = - {\mathbb{E}}_{x \sim p}\left\lbrack \log\frac{q(x)}{p(x)} \right\rbrack \\
-\left( \text{Jensen} \right) & \geq - \log{\mathbb{E}}_{x \sim p}\left\lbrack \frac{q(x)}{p(x)} \right\rbrack \\
- & = - \log\int_{x}p(x)\left( \frac{q(x)}{p(x)} \right)dx \\
- & = - \log\int_{x}q(x)dx \\
- & = - \log 1 \\
- & = 0.
+\text{ KL}\left( p\Vert q \right) &amp; = {\mathbb{E}}<em>{x \sim p}\left\lbrack \log p(x) - \log q(x) \right\rbrack \
+&amp; = - {\mathbb{E}}</em>{x \sim p}\left\lbrack \log\frac{q(x)}{p(x)} \right\rbrack \
+\left( \text{Jensen} \right) &amp; \geq - \log{\mathbb{E}}<em>{x \sim p}\left\lbrack \frac{q(x)}{p(x)} \right\rbrack \
+&amp; = - \log\int</em>{x}p(x)\left( \frac{q(x)}{p(x)} \right)dx \
+&amp; = - \log\int_{x}q(x)dx \
+&amp; = - \log 1 \
+&amp; = 0.
 \end{aligned}
-$$<p>易知当且仅当 $p = q$ 时，$\text{KL}\left( p\|q \right) = 0$.</p>
+$$</p>
+<p>易知当且仅当 $p = q$ 时，$\text{KL}\left( p\Vert q \right) = 0$.</p>
 <h2 id="elbo-等价形式">ELBO 等价形式<a hidden class="anchor" aria-hidden="true" href="#elbo-等价形式">#</a></h2>
 <p>回到 ELBO，ELBO 和真实对数似然的差距为</p>
-$$
+<p>$$
 \begin{aligned}
 \ell(\theta) - \mathcal{F}(q,\theta)
- &= {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x) - \log p_{\theta}(x,z) + \log q(z) \right\rbrack \\
- &= {\mathbb{E}}_{z \sim q}\left\lbrack - \log p_{\theta}\left( z|x \right) + \log q(z) \right\rbrack \\
- &= \text{ KL}\left( q(z)\|p_{\theta}\left( z|x \right) \right) \geq 0.
+&amp;= {\mathbb{E}}<em>{z \sim q}\left\lbrack \log p</em>{\theta}(x) - \log p_{\theta}(x,z) + \log q(z) \right\rbrack \
+&amp;= {\mathbb{E}}<em>{z \sim q}\left\lbrack - \log p</em>{\theta}\left( z\vert x \right) + \log q(z) \right\rbrack \
+&amp;= \text{ KL}\left( q(z)\Vert p_{\theta}\left( z\vert x \right) \right) \geq 0.
 \end{aligned}
-$$<p>因此，ELBO 等价于</p>
-$$\mathcal{F}(q,\theta) = \ell(\theta) - \text{ KL}\left( q(z)\|p_{\theta}\left( z|x \right) \right)$$<p>显然，取等条件同样为 $q(z) = p_{\theta}\left( z|x \right)$.
+$$</p>
+<p>因此，ELBO 等价于</p>
+<p>$$\mathcal{F}(q,\theta) = \ell(\theta) - \text{ KL}\left( q(z)\Vert p_{\theta}\left( z\vert x \right) \right)$$</p>
+<p>显然，取等条件同样为 $q(z) = p_{\theta}\left( z\vert x \right)$.
 而一般的问题中，通常采用以下形式：</p>
-$$
+<p>$$
 \begin{aligned}
- \mathcal{F}(q, \theta)
- &= {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack \\
- &= {\mathbb{E}}_{z \sim q}\left\lbrack \log\frac{p_{\theta}(x,z)}{p_{\theta}(z)} \right\rbrack - \left( {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(z) \right\rbrack \right) \\
- &= {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}\left( x|z \right) \right\rbrack - \text{ KL}\left( q(z)\|p_{\theta}(z) \right)
+\mathcal{F}(q, \theta)
+&amp;= {\mathbb{E}}<em>{z \sim q}\left\lbrack \log p</em>{\theta}(x,z) \right\rbrack - {\mathbb{E}}<em>{z \sim q}\left\lbrack \log q(z) \right\rbrack \
+&amp;= {\mathbb{E}}</em>{z \sim q}\left\lbrack \log\frac{p_{\theta}(x,z)}{p_{\theta}(z)} \right\rbrack - \left( {\mathbb{E}}<em>{z \sim q}\left\lbrack \log q(z) \right\rbrack - {\mathbb{E}}</em>{z \sim q}\left\lbrack \log p_{\theta}(z) \right\rbrack \right) \
+&amp;= {\mathbb{E}}<em>{z \sim q}\left\lbrack \log p</em>{\theta}\left( x\vert z \right) \right\rbrack - \text{ KL}\left( q(z)\Vert p_{\theta}(z) \right)
 \end{aligned}
-$$<h1 id="em">EM<a hidden class="anchor" aria-hidden="true" href="#em">#</a></h1>
+$$</p>
+<h1 id="em">EM<a hidden class="anchor" aria-hidden="true" href="#em">#</a></h1>
 <p>EM 算法的目标是最大化参数 $\theta$ 对数似然：</p>
-$$\ell(\theta) = \log p\left( x|\theta \right)$$<p>第 $i$ 步的参数和隐变量分布分别记为 $\theta^{(i)}$ 和 $q^{(i)}(z)$.</p>
+<p>$$\ell(\theta) = \log p\left( x\vert \theta \right)$$</p>
+<p>第 $i$ 步的参数和隐变量分布分别记为 $\theta^{(i)}$ 和 $q^{(i)}(z)$.</p>
 <h2 id="e-步">E 步<a hidden class="anchor" aria-hidden="true" href="#e-步">#</a></h2>
 <p>最大化 $\ell(\theta^{(i)})$ 的 ELBO，即取等条件</p>
-$$q^{(i + 1)}(z) = p_{\theta^{(i)}}\left( z|x \right)$$<h2 id="m-步">M 步<a hidden class="anchor" aria-hidden="true" href="#m-步">#</a></h2>
+<p>$$q^{(i + 1)}(z) = p_{\theta^{(i)}}\left( z\vert x \right)$$</p>
+<h2 id="m-步">M 步<a hidden class="anchor" aria-hidden="true" href="#m-步">#</a></h2>
 <p>更新参数 $\theta^{(i)}$ 以最大化 ELBO，
-</p>
-$$\theta^{(i + 1)} = \arg\max\limits_{\theta}\mathcal{F}(q^{(i + 1)},\theta)$$<h2 id="收敛性">收敛性<a hidden class="anchor" aria-hidden="true" href="#收敛性">#</a></h2>
-$$\ell(\theta^{(i + 1)})\underset{\text{ELBO}}{\geq}\mathcal{F}(q^{(i + 1)},\theta^{(i + 1)})\underset{\arg\max}{\geq}\mathcal{F}(q^{(i + 1)},\theta^{(i)})\underset{\text{满足取等条件}}{=}\ell(\theta^{(i)})$$<p>因此对数似然单调不减.</p>
+$$\theta^{(i + 1)} = \arg\max\limits_{\theta}\mathcal{F}(q^{(i + 1)},\theta)$$</p>
+<h2 id="收敛性">收敛性<a hidden class="anchor" aria-hidden="true" href="#收敛性">#</a></h2>
+<p>$$\ell(\theta^{(i + 1)})\underset{\text{ELBO}}{\geq}\mathcal{F}(q^{(i + 1)},\theta^{(i + 1)})\underset{\arg\max}{\geq}\mathcal{F}(q^{(i + 1)},\theta^{(i)})\underset{\text{满足取等条件}}{=}\ell(\theta^{(i)})$$</p>
+<p>因此对数似然单调不减.</p>
 <h2 id="例子高斯混合模型-gmm">例子：高斯混合模型 GMM<a hidden class="anchor" aria-hidden="true" href="#例子高斯混合模型-gmm">#</a></h2>
 <p>假设观测数据 $x$ 来自 $K$ 个高斯分布的混合：</p>
-$$p_{\theta}(x) = \sum_{k = 1}^{K}\pi_{k}\mathcal{N}(x|\mu_{k},\Sigma_{k})$$<p>其中 $\theta = \left\{ \pi_{k},\mu_{k},\Sigma_{k} \right\}_{k=1}^K$
-是模型参数，$\pi_{k}$ 是混合系数，满足 $\sum_{k = 1}^{K}\pi_{k} = 1$.
-数据样本为 $\left\{ x^{i} \right\}_{i = 1}^{N}$，引入隐变量 $z$
+<p>$$p_{\theta}(x) = \sum_{k = 1}^{K}\pi_{k}\mathcal{N}(x\vert \mu_{k},\Sigma_{k})$$</p>
+<p>其中 $\theta = \left\{ \pi_{k},\mu_{k},\Sigma_{k} \right\}<em>{k = 1}^{K}$
+是模型参数，$\pi</em>{k}$ 是混合系数，满足 $\sum_{k = 1}^{K}\pi_{k} = 1$.
+数据样本为 $\left{ x^{i} \right}_{i = 1}^{N}$，引入隐变量 $z$
 表示样本属于哪个高斯分布, $z^{i} = k$ 表示样本 $x^{i}$ 来自第 $k$
 个高斯分布.</p>
 <h3 id="e-步-1">E 步<a hidden class="anchor" aria-hidden="true" href="#e-步-1">#</a></h3>
 <p>计算后验概率（责任度）：</p>
-$$
+<p>$$
 \begin{aligned}
-\gamma_{z^{i} = k} & \leftarrow p_{\theta}\left( z^{i} = k|x^{i} \right) \\
- & = \frac{\pi_{k}\mathcal{N}(x^{i}|\mu_{k},\Sigma_{k})}{\sum_{j = 1}^{K}\pi_{j}\mathcal{N}(x^{i}|\mu_{j},\Sigma_{j})}
+\gamma_{z^{i} = k} &amp; \leftarrow p_{\theta}\left( z^{i} = k\vert x^{i} \right) \
+&amp; = \frac{\pi_{k}\mathcal{N}(x^{i}\vert \mu_{k},\Sigma_{k})}{\sum_{j = 1}^{K}\pi_{j}\mathcal{N}(x^{i}\vert \mu_{j},\Sigma_{j})}
 \end{aligned}
-$$<h3 id="m-步-1">M 步<a hidden class="anchor" aria-hidden="true" href="#m-步-1">#</a></h3>
+$$</p>
+<h3 id="m-步-1">M 步<a hidden class="anchor" aria-hidden="true" href="#m-步-1">#</a></h3>
 <p>更新参数：</p>
-$$\theta = \arg\max\limits_{\theta}\mathcal{F}(\gamma,\theta)$$<p>即在已知责任度 $\gamma_{z^{i} = k}$ 下，最大化似然的参数. 定义
+<p>$$\theta = \arg\max\limits_{\theta}\mathcal{F}(\gamma,\theta)$$</p>
+<p>即在已知责任度 $\gamma_{z^{i} = k}$ 下，最大化似然的参数. 定义
 $\begin{aligned}
-N_{k} & = \sum_{i = 1}^{N}\gamma_{z^{i} = k}
+N_{k} &amp; = \sum_{i = 1}^{N}\gamma_{z^{i} = k}
 \end{aligned}$,</p>
-$$
+<p>$$
 \begin{aligned}
-\pi_{k} & \leftarrow \frac{N_{k}}{N} \\
-\mu_{k} & \leftarrow \left( \frac{1}{N_{k}} \right)\sum_{i = 1}^{N}\gamma_{z^{i} = k}x^{i} \\
-\Sigma_{k} & \leftarrow \left( \frac{1}{N_{k}} \right)\sum_{i = 1}^{N}\gamma_{z^{i} = k}\left( x^{i} - \mu_{k} \right)\left( x^{i} - \mu_{k} \right)^{\top}
+\pi_{k} &amp; \leftarrow \frac{N_{k}}{N} \
+\mu_{k} &amp; \leftarrow \left( \frac{1}{N_{k}} \right)\sum_{i = 1}^{N}\gamma_{z^{i} = k}x^{i} \
+\Sigma_{k} &amp; \leftarrow \left( \frac{1}{N_{k}} \right)\sum_{i = 1}^{N}\gamma_{z^{i} = k}\left( x^{i} - \mu_{k} \right)\left( x^{i} - \mu_{k} \right)^{\top}
 \end{aligned}
-$$<h1 id="vae">VAE<a hidden class="anchor" aria-hidden="true" href="#vae">#</a></h1>
+$$</p>
+<h1 id="vae">VAE<a hidden class="anchor" aria-hidden="true" href="#vae">#</a></h1>
 <p>普通的自编码器（Autoencoder）就是编码&ndash;解码：</p>
 <ol>
 <li>
@@ -277,42 +260,44 @@ $$<h1 id="vae">VAE<a hidden class="anchor" aria-hidden="true" href="#vae">#</a><
 $\mu(x)$、方差 $\sigma^{2}(x)$）</p>
 </li>
 <li>
-<p>从这个分布中采样 $z \sim q_{\varphi(z|x)}$，再送给解码器生成
+<p>从这个分布中采样 $z \sim q_{\varphi(z\vert x)}$，再送给解码器生成
 $\hat{x}$.</p>
 </li>
 <li>
 <p>这样隐空间就被正则化成一个连续、平滑的概率空间，可以用来插值、采样、生成新样本.</p>
 </li>
 </ol>
-<h2 id="先验分布">先验分布 $p(z)$<a hidden class="anchor" aria-hidden="true" href="#先验分布">#</a></h2>
+<h2 id="先验分布-pz">先验分布 $p(z)$<a hidden class="anchor" aria-hidden="true" href="#先验分布-pz">#</a></h2>
 <p>隐变量 $z$ 的先验分布 $p(z)$ 通常取标准正态分布 $\mathcal{N}(0,I)$.</p>
-<h2 id="解码器生成分布">解码器（生成分布） $p_{\theta}\left( x|z \right)$<a hidden class="anchor" aria-hidden="true" href="#解码器生成分布">#</a></h2>
+<h2 id="解码器生成分布-p_thetaleft-xvert-z-right">解码器（生成分布） $p_{\theta}\left( x\vert z \right)$<a hidden class="anchor" aria-hidden="true" href="#解码器生成分布-p_thetaleft-xvert-z-right">#</a></h2>
 <p>网络参数 $\theta$ 输入隐变量 $z$，输出数据 $x$
 的分布参数，即高斯分布的均值 $\mu(z)$ 和方差 $\Sigma(z)$.</p>
-<h2 id="编码器近似后验分布">编码器（近似后验分布）$q_{\varphi}\left( z|x \right)$<a hidden class="anchor" aria-hidden="true" href="#编码器近似后验分布">#</a></h2>
-<p>使用 $q_{\varphi}\left( z|x \right)$ 拟合&quot;真实&quot;后验分布
-$p_{\theta}\left( z|x \right)$.同样使用神经网络参数 $\varphi$，输入数据
+<h2 id="编码器近似后验分布q_varphileft-zvert-x-right">编码器（近似后验分布）$q_{\varphi}\left( z\vert x \right)$<a hidden class="anchor" aria-hidden="true" href="#编码器近似后验分布q_varphileft-zvert-x-right">#</a></h2>
+<p>使用 $q_{\varphi}\left( z\vert x \right)$ 拟合&quot;真实&quot;后验分布
+$p_{\theta}\left( z\vert x \right)$.同样使用神经网络参数 $\varphi$，输入数据
 $x$，输出隐变量 $z$ 的分布参数.</p>
 <h3 id="近似后验-和-真实后验">&ldquo;近似&quot;后验 和 &ldquo;真实&quot;后验<a hidden class="anchor" aria-hidden="true" href="#近似后验-和-真实后验">#</a></h3>
 <p>&ldquo;真实&quot;的后验分布由贝叶斯公式得出</p>
-$$
+<p>$$
 \begin{aligned}
-p_{\theta}\left( x|z \right) &= \frac{p_{\theta}\left( x|z \right)p(z)}{p_{\theta}(x)} \\
-p_{\theta}(x) &= \int p_{\theta}\left( x|z \right)p(z)dz
+p_{\theta}\left( x\vert z \right) &amp;= \frac{p_{\theta}\left( x\vert z \right)p(z)}{p_{\theta}(x)} \
+p_{\theta}(x) &amp;= \int p_{\theta}\left( x\vert z \right)p(z)dz
 \end{aligned}
-$$<p>因此真实的后验不可解，使用近似后验 $q_{\varphi}\left( z|x \right)$
+$$</p>
+<p>因此真实的后验不可解，使用近似后验 $q_{\varphi}\left( z\vert x \right)$
 来代替.</p>
 <h2 id="elbo-和损失函数">ELBO 和损失函数<a hidden class="anchor" aria-hidden="true" href="#elbo-和损失函数">#</a></h2>
 <p>使用 ELBO 替代对数似然：</p>
-$$\log p_{\theta}(x) \geq {\mathbb{E}}_{q_{\varphi}\left( z|x \right)}\left\lbrack \log p_{\theta}\left( x|z \right) \right\rbrack - \text{ KL}\left( q_{\varphi}\left( z|x \right)\|p(z) \right)$$<p>其中</p>
+<p>$$\log p_{\theta}(x) \geq {\mathbb{E}}<em>{q</em>{\varphi}\left( z\vert x \right)}\left\lbrack \log p_{\theta}\left( x\vert z \right) \right\rbrack - \text{ KL}\left( q_{\varphi}\left( z\vert x \right)\Vert p(z) \right)$$</p>
+<p>其中</p>
 <ul>
 <li>
-<p>${\mathbb{E}}_{q_{\varphi}\left( z|x \right)}\left\lbrack \log p_{\theta}\left( x|z \right) \right\rbrack$
+<p>${\mathbb{E}}<em>{q</em>{\varphi}\left( z\vert x \right)}\left\lbrack \log p_{\theta}\left( x\vert z \right) \right\rbrack$
 是重构误差，衡量解码器重构 $\hat{x}$ 与输入 $x$ 的差异；</p>
 </li>
 <li>
-<p>$\text{KL}\left( q_{\varphi}\left( z|x \right)\|p(z) \right)$
-是正则化项，使近似后验分布 $q_{\varphi}\left( z|x \right)$
+<p>$\text{KL}\left( q_{\varphi}\left( z\vert x \right)\Vert p(z) \right)$
+是正则化项，使近似后验分布 $q_{\varphi}\left( z\vert x \right)$
 尽量接近先验分布 $p(z)$（标准正态分布）.</p>
 </li>
 </ul>
@@ -320,11 +305,11 @@ $$\log p_{\theta}(x) \geq {\mathbb{E}}_{q_{\varphi}\left( z|x \right)}\left\lbra
 <p>目前我们有</p>
 <ol>
 <li>
-<p>编码器 $q_{\varphi}\left( z|x \right)$，输入 $x$，输出隐变量 $z$
+<p>编码器 $q_{\varphi}\left( z\vert x \right)$，输入 $x$，输出隐变量 $z$
 的高斯分布参数 $\mu(x),\sigma^{2}(x)$；</p>
 </li>
 <li>
-<p>解码器 $p_{\theta}\left( x|z \right)$，输入隐变量 $z$，输出重构
+<p>解码器 $p_{\theta}\left( x\vert z \right)$，输入隐变量 $z$，输出重构
 $\hat{x}$ 的分布；</p>
 </li>
 <li>
@@ -332,26 +317,27 @@ $\hat{x}$ 的分布；</p>
 </li>
 <li>
 <p>损失函数 ELBO
-</p>
-$$\mathcal{L} = - {\mathbb{E}}_{q_{\varphi}\left( z|x \right)}\left\lbrack \log p_{\theta}\left( x|z \right) \right\rbrack + \text{ KL}\left( q_{\varphi}\left( z|x \right)\|p(z) \right)$$</li>
+$$\mathcal{L} = - {\mathbb{E}}<em>{q</em>{\varphi}\left( z\vert x \right)}\left\lbrack \log p_{\theta}\left( x\vert z \right) \right\rbrack + \text{ KL}\left( q_{\varphi}\left( z\vert x \right)\Vert p(z) \right)$$</p>
+</li>
 </ol>
 <p>训练时，期望项（重构误差）没有解析解，使用 $z$ 的采样来近似.
 为了保证采样 $z \sim \mathcal{N}(\mu(x),\sigma^{2}(x))$
 可导，使用重参数化技巧：</p>
-$$
+<p>$$
 \begin{array}{r}
-z = \mu(x) + \sigma(x) \odot \varepsilon, \\
+z = \mu(x) + \sigma(x) \odot \varepsilon, \
 \end{array}
-$$<p>其中 $\varepsilon \sim \mathcal{N}(0,I)$ 是独立噪声.</p>
+$$</p>
+<p>其中 $\varepsilon \sim \mathcal{N}(0,I)$ 是独立噪声.</p>
 <h2 id="展开-kl-散度">展开 KL 散度<a hidden class="anchor" aria-hidden="true" href="#展开-kl-散度">#</a></h2>
-<p>记 $q_{\text{agg }}(z) = {\mathbb{E}}_{x \sim P(x)}q\left( z|x \right)$,</p>
+<p>记 $q_{\text{agg }}(z) = {\mathbb{E}}_{x \sim P(x)}q\left( z\vert x \right)$,</p>
 <p>$$
 \begin{aligned}
 \text{ELBO}
-&amp;= \mathbb{E}<em>{q</em>{\varphi}(z|x)}!\left[\log p_{\theta}(x|z)\right]</p>
+&amp;= \mathbb{E}<em>{q</em>{\varphi}(z\vert x)}!\left[\log p_{\theta}(x\vert z)\right]</p>
 <ul>
-<li>\mathrm{KL}!\left(q_{\text{agg}}(z)|p(z)\right) \
-&amp;= \underbrace{\mathbb{E}<em>{q</em>{\varphi}(z|x)}!\left[\log p_{\theta}(x|z)\right]}_{\text{重构项}}</li>
+<li>\mathrm{KL}!\left(q_{\text{agg}}(z)\Vert p(z)\right) \
+&amp;= \underbrace{\mathbb{E}<em>{q</em>{\varphi}(z\vert x)}!\left[\log p_{\theta}(x\vert z)\right]}_{\text{重构项}}</li>
 <li>\underbrace{H!\left(q_{\text{agg}}(z),p(z)\right)}_{\text{交叉熵}}</li>
 </ul>
 <ul>
@@ -379,9 +365,10 @@ $$</li>
 <p>如果解码器足够强大，例如 autoregressive 模型，可以不依赖 $z$, 或者仅从
 $z$ 的一部分维度中重构输入 $x$. 即 $z$
 的某些维度对重构没有贡献，导致这些维度的近似后验分布
-$q_{\varphi}\left( z|x \right)$ 退化为先验分布
+$q_{\varphi}\left( z\vert x \right)$ 退化为先验分布
 $p(z)$，从而无法学习到有效的隐表示.</p>
-$$\exists i\ s.t.\ \forall x,q_{\varphi}\left( z_{i}|x \right) = p\left( z_{i} \right)$$<h2 id="vector-quantized-vaevq-vae">Vector Quantized VAE(VQ VAE)<a hidden class="anchor" aria-hidden="true" href="#vector-quantized-vaevq-vae">#</a></h2>
+<p>$$\exists i\ s.t.\ \forall x,q_{\varphi}\left( z_{i}\vert x \right) = p\left( z_{i} \right)$$</p>
+<h2 id="vector-quantized-vaevq-vae">Vector Quantized VAE(VQ VAE)<a hidden class="anchor" aria-hidden="true" href="#vector-quantized-vaevq-vae">#</a></h2>
 <p>让隐变量 $z$ 取离散值，而不是连续值.
 定义一个有限的码本（codebook），编码器输出一个向量 $e_{i}$，然后将
 $e_{i}$ 映射到码本中距离最近的离散向量 $e_{k}$.</p>
@@ -393,14 +380,13 @@ $e_{i}$ 映射到码本中距离最近的离散向量 $e_{k}$.</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/vae/">VAE</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:1313/">Zifan Ying</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
 
     <span>
         Powered by
