@@ -4,34 +4,21 @@
     <title>CV on Zifan Ying</title>
     <link>http://localhost:1313/categories/cv/</link>
     <description>Recent content in CV on Zifan Ying</description>
+    <image>
+      <title>Zifan Ying</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
     <generator>Hugo -- 0.153.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 02:14:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 03:29:28 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/cv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ELBO，EM和VAE</title>
       <link>http://localhost:1313/posts/my-first-post/</link>
-      <pubDate>Fri, 26 Dec 2025 02:14:14 +0000</pubDate>
+      <pubDate>Fri, 26 Dec 2025 03:29:28 +0000</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h1 id=&#34;证据下界-elbo&#34;&gt;证据下界 ELBO&lt;/h1&gt;
-&lt;p&gt;在最大似然估计（Maximum Likelihood Estimation,
-MLE）中，目标是最大化观测数据 $x$ 的对数似然.&lt;/p&gt;
-&lt;p&gt;参数 $\theta$ 的对数似然（log likelihood）的定义为&lt;/p&gt;
-$$\ell(\theta) = \log p_{\theta}(x) = \log\sum_{z}p_{\theta}(x,z),$$&lt;p&gt;其中 $x$ 是观测变量，$z$ 是潜在变量. 根据 Jensen 不等式，对于任意分布
-$q(z)$，有&lt;/p&gt;
-$$
-\begin{aligned}
-\ell(\theta) &amp;= \log\sum_{z}p_{\theta}(x,z) = \log\sum_{z}q(z)\frac{p_{\theta}(x,z)}{q(z)} = \log{\mathbb{E}}_{z \sim q}\left\lbrack \frac{p_{\theta}(x,z)}{q(z)} \right\rbrack \\
- &amp;\geq {\mathbb{E}}_{z \sim q}\left\lbrack \log\frac{p_{\theta}(x,z)}{q(z)} \right\rbrack = {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack
-\end{aligned}
-$$&lt;p&gt;由此定义 $\ell(\theta)$ 的证据下界（Evidence Lower BOund, ELBO）$\mathcal{F}$:&lt;/p&gt;
-$$
-\ell(\theta) \geq \mathcal{F}(q,\theta) \equiv {\mathbb{E}}_{z \sim q}\left\lbrack \log p_{\theta}(x,z) \right\rbrack - {\mathbb{E}}_{z \sim q}\left\lbrack \log q(z) \right\rbrack.
-$$&lt;h2 id=&#34;取等条件&#34;&gt;取等条件&lt;/h2&gt;
-&lt;p&gt;Jensen 不等式能够取等，当且仅当对于所有 $z$,
-$\frac{p_{\theta}(x,z)}{q(z)}$
-为常数 $c$.
-因此&lt;/p&gt;</description>
+      <description>从ELBO推导EM和VAE</description>
     </item>
   </channel>
 </rss>

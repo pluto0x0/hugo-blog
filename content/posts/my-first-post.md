@@ -2,10 +2,17 @@
 date = "2025-12-26T03:29:28.500Z"
 draft = false
 title = "ELBO，EM和VAE"
-description = ""
+description = "从ELBO推导EM和VAE"
 categories = [ "CV" ]
 tags = [ "VAE" ]
 +++
+
+
+```python
+123
+123
+123
+```
 
 # 证据下界 ELBO
 
@@ -173,6 +180,8 @@ $$\theta = \arg\max\limits_{\theta}\mathcal{F}(\gamma,\theta)$$
 $\begin{aligned}
 N_{k} & = \sum_{i = 1}^{N}\gamma_{z^{i} = k}
 \end{aligned}$,
+
+则更新步骤为
 
 $$
 \begin{aligned}
