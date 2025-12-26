@@ -8,7 +8,22 @@ tags: []
 categories: []
 ---
 
-最后修改于 11:45:19 2025-12-26.
+```yaml
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+    - identifier: example
+      name: example.org
+      url: https://example.org
+      weight: 30
+```
 
 # Diffusion Model
 

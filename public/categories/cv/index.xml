@@ -4,20 +4,15 @@
     <title>CV on Zifan Ying</title>
     <link>http://localhost:1313/categories/cv/</link>
     <description>Recent content in CV on Zifan Ying</description>
-    <image>
-      <title>Zifan Ying</title>
-      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
     <generator>Hugo -- 0.153.2</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 26 Dec 2025 03:29:28 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/cv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ELBO，EM和VAE</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>http://localhost:1313/posts/elbo-em-vae/</link>
       <pubDate>Fri, 26 Dec 2025 03:29:28 +0000</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>http://localhost:1313/posts/elbo-em-vae/</guid>
       <description>从ELBO推导EM和VAE</description>
     </item>
   </channel>
