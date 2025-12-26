@@ -345,30 +345,16 @@ z = \mu(x) + \sigma(x) \odot \varepsilon, \\
 $$<p>其中 $\varepsilon \sim \mathcal{N}(0,I)$ 是独立噪声.</p>
 <h2 id="展开-kl-散度">展开 KL 散度<a hidden class="anchor" aria-hidden="true" href="#展开-kl-散度">#</a></h2>
 <p>记 $q_{\text{agg }}(z) = {\mathbb{E}}_{x \sim P(x)}q\left( z|x \right)$,</p>
-<p>$$
+$$
 \begin{aligned}
 \text{ELBO}
-&amp;= \mathbb{E}<em>{q</em>{\varphi}(z|x)}!\left[\log p_{\theta}(x|z)\right]</p>
-<ul>
-<li>\mathrm{KL}!\left(q_{\text{agg}}(z)|p(z)\right) \
-&amp;= \underbrace{\mathbb{E}<em>{q</em>{\varphi}(z|x)}!\left[\log p_{\theta}(x|z)\right]}_{\text{重构项}}</li>
-<li>\underbrace{H!\left(q_{\text{agg}}(z),p(z)\right)}_{\text{交叉熵}}</li>
-</ul>
-<ul>
-<li>\underbrace{H!\left(p(z)\right)}_{\text{熵}} .
+&= \mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right] - \mathrm{KL}\!\left(q_{\text{agg}}(z)\|p(z)\right) \\
+&= \underbrace{\mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right]}_{\text{重构项}} - \underbrace{H\!\left(q_{\text{agg}}(z),p(z)\right)}_{\text{交叉熵}} + \underbrace{H\!\left(p(z)\right)}_{\text{熵}}.
 \end{aligned}
-$$</li>
-</ul>
-<ol>
-<li>
-<p>重构项：鼓励隐变量分布远离先验分布 $p(z)$，提高重构质量</p>
-</li>
-<li>
-<p>交叉熵：把隐变量分布拉向先验分布 $p(z)$ 中心，会同时减小均值和方差</p>
-</li>
-<li>
-<p>熵：鼓励隐变量分布增大方差，分布更扁平</p>
-</li>
+$$<ol>
+<li>重构项：鼓励隐变量分布远离先验分布 $p(z)$，提高重构质量</li>
+<li>交叉熵：把隐变量分布拉向先验分布 $p(z)$ 中心，会同时减小均值和方差</li>
+<li>熵：鼓励隐变量分布增大方差，分布更扁平</li>
 </ol>
 <h2 id="vae-的问题">VAE 的问题<a hidden class="anchor" aria-hidden="true" href="#vae-的问题">#</a></h2>
 <h3 id="prior-hole">Prior Hole<a hidden class="anchor" aria-hidden="true" href="#prior-hole">#</a></h3>

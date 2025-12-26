@@ -282,18 +282,13 @@ $$
 $$
 \begin{aligned}
 \text{ELBO}
-&= \mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right]
-   - \mathrm{KL}\!\left(q_{\text{agg}}(z)\|p(z)\right) \\
-&= \underbrace{\mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right]}_{\text{重构项}}
- - \underbrace{H\!\left(q_{\text{agg}}(z),p(z)\right)}_{\text{交叉熵}}
- + \underbrace{H\!\left(p(z)\right)}_{\text{熵}} .
+&= \mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right] - \mathrm{KL}\!\left(q_{\text{agg}}(z)\|p(z)\right) \\
+&= \underbrace{\mathbb{E}_{q_{\varphi}(z|x)}\!\left[\log p_{\theta}(x|z)\right]}_{\text{重构项}} - \underbrace{H\!\left(q_{\text{agg}}(z),p(z)\right)}_{\text{交叉熵}} + \underbrace{H\!\left(p(z)\right)}_{\text{熵}}.
 \end{aligned}
 $$
 
 1. 重构项：鼓励隐变量分布远离先验分布 $p(z)$，提高重构质量
-
 2. 交叉熵：把隐变量分布拉向先验分布 $p(z)$ 中心，会同时减小均值和方差
-
 3. 熵：鼓励隐变量分布增大方差，分布更扁平
 
 ## VAE 的问题
