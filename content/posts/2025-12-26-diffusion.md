@@ -1,29 +1,13 @@
 ---
-title: diffusion
-description: ""
+title: Diffusion Model
+description: DDPM, Langevin dynamics, CFG
 date: 2025-12-26T11:46:28.632Z
 preview: ""
 draft: false
-tags: []
+tags:
+    - Diffusion
 categories: []
 ---
-
-```yaml
-menu:
-  main:
-    - identifier: categories
-      name: categories
-      url: /categories/
-      weight: 10
-    - identifier: tags
-      name: tags
-      url: /tags/
-      weight: 20
-    - identifier: example
-      name: example.org
-      url: https://example.org
-      weight: 30
-```
 
 # Diffusion Model
 
