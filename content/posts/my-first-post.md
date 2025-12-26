@@ -1,5 +1,5 @@
 +++
-date = "2025-12-26T02:14:14.028Z"
+date = "2025-12-26T03:29:28.500Z"
 draft = false
 title = "ELBO，EM和VAE"
 description = ""

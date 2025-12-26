@@ -6,12 +6,12 @@
     <description>Recent content on Zifan Ying</description>
     <generator>Hugo -- 0.153.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 02:14:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 03:29:28 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ELBO，EM和VAE</title>
       <link>http://localhost:1313/posts/my-first-post/</link>
-      <pubDate>Fri, 26 Dec 2025 02:14:14 +0000</pubDate>
+      <pubDate>Fri, 26 Dec 2025 03:29:28 +0000</pubDate>
       <guid>http://localhost:1313/posts/my-first-post/</guid>
       <description>&lt;h1 id=&#34;证据下界-elbo&#34;&gt;证据下界 ELBO&lt;/h1&gt;
 &lt;p&gt;在最大似然估计（Maximum Likelihood Estimation,
