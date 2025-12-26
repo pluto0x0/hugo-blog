@@ -7,13 +7,6 @@ categories = [ "CV" ]
 tags = [ "VAE" ]
 +++
 
-
-```python
-123
-123
-123
-```
-
 # 证据下界 ELBO
 
 在最大似然估计（Maximum Likelihood Estimation,

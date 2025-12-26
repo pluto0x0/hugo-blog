@@ -11,13 +11,37 @@
     </image>
     <generator>Hugo -- 0.153.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Dec 2025 03:29:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Dec 2025 11:46:28 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>diffusion</title>
+      <link>http://localhost:1313/posts/2025-12-26-diffusion/</link>
+      <pubDate>Fri, 26 Dec 2025 11:46:28 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2025-12-26-diffusion/</guid>
+      <description>&lt;p&gt;最后修改于 11:45:19 2025-12-26.&lt;/p&gt;
+&lt;h1 id=&#34;diffusion-model&#34;&gt;Diffusion Model&lt;/h1&gt;
+&lt;h2 id=&#34;加噪过程&#34;&gt;加噪过程&lt;/h2&gt;
+&lt;p&gt;定义一个&lt;strong&gt;马尔可夫链&lt;/strong&gt;，从数据 $x_{0} \sim q(x)$
+开始，每一步加一点噪声：&lt;/p&gt;
+$$q\left( x_{t}~|~x_{t - 1} \right) = \mathcal{N}(x_{t};\sqrt{1 - \beta_{t}}x_{t - 1},\beta_{t}I)$$&lt;p&gt;使用重参数化，等价于&lt;/p&gt;
+$$x_{t} = \sqrt{1 - \beta_{t}}x_{t - 1} + \sqrt{\beta_{t}}\varepsilon_{t},\quad\varepsilon_{t} \sim N(0,I),$$&lt;p&gt;其中 $\beta$ 是一系列预定义的参数.&lt;/p&gt;
+&lt;p&gt;对于两个高斯分布 $x_{1} \sim \mathcal{N}(\mu_{1},\sigma_{1}^{2})$ 和
+$x_{2} \sim \mathcal{N}(\mu_{2},\sigma_{2}^{2})$，我们有：&lt;/p&gt;
+$$x_{1} + x_{2} \sim \mathcal{N}(\mu_{1} + \mu_{2},\sigma_{1}^{2} + \sigma_{2}^{2})$$&lt;p&gt;于是定义 $\alpha_{t} = 1 - \beta_{t}$，则&lt;/p&gt;
+$$\begin{aligned}
+x_{t} &amp; = \sqrt{\alpha_{t}}x_{t - 1} + \sqrt{1 - \alpha_{t}}\varepsilon_{t} \\
+ &amp; = \sqrt{\alpha_{t}\alpha_{t - 1}}x_{t - 2} + \sqrt{\alpha_{t}\left( 1 - \alpha_{t - 1} \right)}\varepsilon_{t} + \sqrt{1 - \alpha_{t}}\varepsilon_{t} \\
+ &amp; = \sqrt{\alpha_{t}\alpha_{t - 1}}x_{t - 2} + \sqrt{1 - \alpha_{t}\alpha_{t - 1}}\varepsilon \\
+ &amp; = \sqrt{\alpha_{t}\alpha_{t - 1}\alpha_{t - 2}}x_{t - 3} + \sqrt{1 - \alpha_{t}\alpha_{t - 1}\alpha_{t - 2}}\varepsilon \\
+ &amp; = \ldots
+\end{aligned}$$&lt;p&gt;定义 ${\overline{\alpha}}_{t} = \prod_{s = 1}^{t}\alpha_{s}$, 得到
+$x_{t}$ 的封闭形式&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>ELBO，EM和VAE</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>http://localhost:1313/posts/elbo-em-vae/</link>
       <pubDate>Fri, 26 Dec 2025 03:29:28 +0000</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>http://localhost:1313/posts/elbo-em-vae/</guid>
       <description>从ELBO推导EM和VAE</description>
     </item>
   </channel>
