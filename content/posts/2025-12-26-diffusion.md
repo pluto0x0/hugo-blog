@@ -5,7 +5,7 @@ date: 2025-12-26T11:46:28.632Z
 preview: ""
 draft: false
 tags:
-    - Diffusion
+  - Diffusion
 categories: []
 ---
 
@@ -31,15 +31,17 @@ $$x_{1} + x_{2} \sim \mathcal{N}(\mu_{1} + \mu_{2},\sigma_{1}^{2} + \sigma_{2}^{
 
 于是定义 $\alpha_{t} = 1 - \beta_{t}$，则
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 x_{t} & = \sqrt{\alpha_{t}}x_{t - 1} + \sqrt{1 - \alpha_{t}}\varepsilon_{t} \\
  & = \sqrt{\alpha_{t}\alpha_{t - 1}}x_{t - 2} + \sqrt{\alpha_{t}\left( 1 - \alpha_{t - 1} \right)}\varepsilon_{t} + \sqrt{1 - \alpha_{t}}\varepsilon_{t} \\
  & = \sqrt{\alpha_{t}\alpha_{t - 1}}x_{t - 2} + \sqrt{1 - \alpha_{t}\alpha_{t - 1}}\varepsilon \\
  & = \sqrt{\alpha_{t}\alpha_{t - 1}\alpha_{t - 2}}x_{t - 3} + \sqrt{1 - \alpha_{t}\alpha_{t - 1}\alpha_{t - 2}}\varepsilon \\
  & = \ldots
-\end{aligned}$$
+\end{aligned}
+$$
 
-定义 ${\overline{\alpha}}_{t} = \prod_{s = 1}^{t}\alpha_{s}$, 得到
+定义 ${\overline{\alpha}}_{t} = \prod_{s = 1}^{\top}\alpha_{s}$, 得到
 $x_{t}$ 的封闭形式
 
 $$x_{t} = \sqrt{{\overline{\alpha}}_{t}}x_{0} + \sqrt{1 - {\overline{\alpha}}_{t}}\varepsilon,\quad\varepsilon \sim N(0,I).$$
@@ -65,7 +67,7 @@ $q\left( x_{t - 1}~|~x_{t} \right)$不可解，因此使用一个模型 $\theta$
 
 $$p_{\theta}\left( x_{t - 1}~|~x_{t} \right) = \mathcal{N}(x_{t - 1};\mu_{\theta}\left( x_{t},t \right),\Sigma_{\theta}\left( x_{t},t \right))$$
 
-## 最大似然估计 MLE
+## 损失函数：最大似然估计 MLE
 
 目标是最小化去噪模型 $p_{\theta}$ 对初始数据 $x_{0}$ 的负对数似然：
 
@@ -74,33 +76,39 @@ $$\mathcal{L}(\theta) = - \log p_{\theta}\left( x_{0} \right)$$
 同样地，使用变分下界 ELBO 优化，其中 $x_{0}$ 是已知变量，$x_{1:T}$
 是隐变量：
 
-$$\begin{array}{r}
+$$
+\begin{array}{r}
 \mathcal{F}(q,\theta) = {\mathbb{E}}_{q\left( x_{1:T}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0:T} \right) - \log q\left( x_{1:T}|x_{0} \right) \right\rbrack \\
 \mathcal{L}(\theta) \leq - \mathcal{F}(q,\theta)
-\end{array}$$
+\end{array}
+$$
 
 根据马尔可夫性质，
 
-$$\begin{array}{r}
-q\left( x_{1:T}|x_{0} \right) = q\left( x_{T}~|~x_{0} \right)\prod_{t = 2}^{T}q\left( x_{t - 1}~|~x_{t},x_{0} \right) \\
-p_{\theta}\left( x_{0:T} \right) = p_{\theta}\left( x_{T} \right)\prod_{t = 1}^{T}p_{\theta}\left( x_{t - 1}~|~x_{t} \right)
-\end{array}$$
+$$
+\begin{array}{r}
+q\left( x_{1:T}|x_{0} \right) = q\left( x_{T}~|~x_{0} \right)\prod_{t = 2}^{\top}q\left( x_{t - 1}~|~x_{t},x_{0} \right) \\
+p_{\theta}\left( x_{0:T} \right) = p_{\theta}\left( x_{T} \right)\prod_{t = 1}^{\top}p_{\theta}\left( x_{t - 1}~|~x_{t} \right)
+\end{array}
+$$
 
 代入得到 $\mathcal{F}(q,\theta)$
 
-$$\begin{aligned}
- = & {\mathbb{E}}_{q\left( x_{1}:x_{T}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{T} \right) + \sum_{t = 1}^{T}\log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) - \log q\left( x_{T}~|~x_{0} \right) - \sum_{t = 2}^{T}q\left( x_{t - 1}~|~x_{t},x_{0} \right) \right\rbrack \\
- = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{T}{\mathbb{E}}_{q\left( x_{t},x_{t - 1}|x_{0} \right)}\left\lbrack \log q\left( x_{t - 1}~|~x_{t},x_{0} \right) - \log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right\rbrack \\
+$$
+\begin{aligned}
+ = & {\mathbb{E}}_{q\left( x_{1}:x_{T}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{T} \right) + \sum_{t = 1}^{\top}\log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) - \log q\left( x_{T}~|~x_{0} \right) - \sum_{t = 2}^{\top}q\left( x_{t - 1}~|~x_{t},x_{0} \right) \right\rbrack \\
+ = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{\top}{\mathbb{E}}_{q\left( x_{t},x_{t - 1}|x_{0} \right)}\left\lbrack \log q\left( x_{t - 1}~|~x_{t},x_{0} \right) - \log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right\rbrack \\
  & + {\mathbb{E}}_{q\left( x_{T}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{T} \right) - \log q\left( x_{T}~|~x_{0} \right) \right\rbrack \\
- = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{T}{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}{\mathbb{E}}_{q\left( x_{t - 1}|x_{t},x_{0} \right)}\left\lbrack \log q\left( x_{t - 1}~|~x_{t},x_{0} \right) - \log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right\rbrack \\
+ = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{\top}{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}{\mathbb{E}}_{q\left( x_{t - 1}|x_{t},x_{0} \right)}\left\lbrack \log q\left( x_{t - 1}~|~x_{t},x_{0} \right) - \log p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right\rbrack \\
  & + {\mathbb{E}}_{q\left( x_{T}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{T} \right) - \log q\left( x_{T}~|~x_{0} \right) \right\rbrack \\
- = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{T}{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}\text{ KL}\left( q\left( x_{t - 1}~|~x_{t},x_{0} \right)\| p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right) \\
+ = & {\mathbb{E}}_{q\left( x_{1}|x_{0} \right)}\left\lbrack \log p_{\theta}\left( x_{0}|x_{1} \right) \right\rbrack - \sum_{t = 2}^{\top}{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}\text{ KL}\left( q\left( x_{t - 1}~|~x_{t},x_{0} \right)\| p_{\theta}\left( x_{t - 1}~|~x_{t} \right) \right) \\
  & - \text{ KL}\left( \log q\left( x_{T}~|~x_{0} \right)\|\log p_{\theta}\left( x_{T} \right) \right)
-\end{aligned}$$
+\end{aligned}
+$$
 
 分别记作
 
-$$\mathcal{L} ≔ - \mathcal{F}(q,\theta) = \mathcal{L}_{0} + \sum_{t = 2}^{T}\mathcal{L}_{t - 1} + \mathcal{L}_{T}.$$
+$$\mathcal{L} ≔ - \mathcal{F}(q,\theta) = \mathcal{L}_{0} + \sum_{t = 2}^{\top}\mathcal{L}_{t - 1} + \mathcal{L}_{T}.$$
 
 其中
 
@@ -130,6 +138,105 @@ $$\mathcal{L} ≔ - \mathcal{F}(q,\theta) = \mathcal{L}_{0} + \sum_{t = 2}^{T}\m
     $p_{\theta}\left( x_{T} \right)$ 被定义为 $\mathcal{N}(0,I)$
 
   - 因此该项可以**忽略不计**.
+
+## 单步去噪损失
+
+> 两个高斯分布的密度的乘积满足：
+$$
+\mathcal{N}(x;\mu_{1},\Sigma_{1})\mathcal{N}(x;\mu_{2},\Sigma_{2}) \propto \mathcal{N}(x;\mu,\Sigma)
+$$
+其中
+$\Sigma = \left( \Sigma_{1}^{- 1} + \Sigma_{2}^{- 1} \right)^{- 1}$,
+$\mu = \Sigma\left( \Sigma_{1}^{- 1}\mu_{1} + \Sigma_{2}^{- 1}\mu_{2} \right)$
+
+考虑单步去噪过程：
+
+$$
+\tag{a}
+\begin{aligned}
+  q\left( x_{t - 1}|x_{t},x_{0} \right)
+  &= \frac{q\left( x_{t}~|~x_{t - 1},x_{0} \right)q\left( x_{t - 1}|x_{0} \right)}{q\left( x_{t}|x_{0} \right)} \\
+  &\propto \mathcal{N}(x_{t};\sqrt{\alpha_{t}}x_{t - 1},\left( 1 - \alpha_{t} \right)I)\mathcal{N}(x_{t - 1};\sqrt{{\overline{\alpha}}_{t - 1}}x_{0},\left( 1 - {\overline{\alpha}}_{t - 1} \right)I) \\ 
+  &\propto \mathcal{N}\left(x_{t - 1};\frac{\sqrt{\alpha_{t}}(1 - {\overline{\alpha}}_{t - 1})x_{t} + \sqrt{{\overline{\alpha}}_{t - 1}}\beta_{t}x_{0}}{1 - {\overline{\alpha}}_{t}},\frac{\left( 1 - \alpha_{t} \right)\left( 1 - {\overline{\alpha}}_{t - 1} \right)}{1 - {\overline{\alpha}}_{t}}I\right) \\
+  &=: \mathcal{N}(x_{t-1};\; \mu_q(x_t, x_0),\; \sigma_q(t)^2 I)
+\end{aligned}
+$$
+
+其中
+$\mathcal{N}(x_{t};\sqrt{\alpha_{t}}x_{t - 1},\beta_{t}I) \propto \mathcal{N}(x_{t - 1};\left( \frac{1}{\sqrt{\alpha_{t}}} \right)x_{t},\left( \frac{\beta_{t}}{\alpha_{t}} \right)I)$
+，由多元高斯分布定义
+$\mathcal{N}(x,\mu,\Sigma) = \frac{1}{\sqrt{(2\pi)^{d}|\Sigma|}}\exp( - \frac{1}{2}(x - \mu)^{\top}\Sigma^{- 1}(x - \mu))$
+带入可得。
+
+(a) 中的真实条件分布
+$q\left( x_{t - 1}|x_{t},x_{0} \right)$
+就是去噪模型的
+$p_{\theta}\left( x_{t - 1}~|~x_{t} \right)$
+的目标。二者差异在 $\mathcal{L}_{t - 1}$ 中通过KL散度描述.
+
+观察 (a) 可知条件分布的方差独立于 $x$，因此只需要学习分布的均值。
+
+> 两个高斯分布之间的KL散度为：
+$$
+\begin{aligned}
+  &{\text{KL}\left( \mathcal{N}(\mu_{1},\Sigma_{1})\|\mathcal{N}(\mu_{2},\Sigma_{2}) \right)} \\
+  =& \frac{1}{2}\left\lbrack \log\left( \frac{\left| \Sigma_{2} \right|}{\left| \Sigma_{1} \right|} \right) - d + \operatorname{tr}(\Sigma_{2}^{- 1}\Sigma_{1}) + \left( \mu_{2} - \mu_{1} \right)^{\top}\Sigma_{2}^{- 1}\left( \mu_{2} - \mu_{1} \right) \right\rbrack
+\end{aligned}
+$$
+
+又因为两个分布的方差是确定的, 最小化 $\mathcal{L}_{t - 1}$ 等价于最小化
+
+$$
+\tag{b}
+{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}\left\lbrack \frac{1}{2\sigma_{q}^{2}(t)}\left\| {\mu_{q}\left( x_{t},x_{0},t \right) - \mu_{\theta}\left( x_{t},t \right)} \right\|_{2}^{2} \right\rbrack
+$$
+
+模型预测的**原始数据 $x_0$** 记为 $\hat{x_{\theta}}(x_{t},t)$,
+则预测的均值为
+$\mu_{\theta}\left( x_{t},t \right) = \mu_{q}\left( x_{t},\hat{x_{\theta}}(x_{t},t),t \right)$.
+带入得到 (b) 等价于
+
+$$
+\tag{b.1}
+{\mathbb{E}}_{q\left( x_{t}|x_{0} \right)}\left\lbrack \frac{1}{2\sigma_{q}^{2}(t)}\frac{{\overline{\alpha}}_{t - 1}\beta_{t}^{2}}{\left( 1 - {\overline{\alpha}}_{t} \right)^{2}}\left\| {\hat{x_{\theta}}(x_{t},t) - x_{0}} \right\|_{2}^{2} \right\rbrack
+$$
+
+## 训练步骤
+
+到现在为止，可以很容易得到完整的训练步骤：
+
+1. 采样：数据 $x_{0} \sim q(x)$，时间步 $t \sim \text{ Unif}\left( \left\{ 1,\ldots,T \right\} \right)$，标准高斯采样 $\varepsilon \sim \mathcal{N}(0,I)$
+2. 计算 $x_{t} = \sqrt{{\overline{\alpha}}_{t}}x_{0} + \sqrt{1 - {\overline{\alpha}}_{t}}\varepsilon$;
+3. 预测 $\hat{x_{\theta}}(x_{t},t)$
+4. 计算 loss $\mathcal{L}_{t} = w(t)\left\| {\hat{x_{\theta}}(x_{t},t) - x_{0}} \right\|_{2}^{2}$ 其中 $w(t) = \frac{1}{2\sigma_{q}^{2}(t)}\frac{{\overline{\alpha}}_{t - 1}\beta_{t}^{2}}{\left( 1 - {\overline{\alpha}}_{t} \right)^{2}}$
+5. 最小化 $\mathcal{L}_{t}$, 更新参数 $\theta$.
+
+## 预测噪声和v-parameterization等价
+
+目前为止，对去噪步骤的预测是通过预测原始数据 $x_0$ 得到的。而
+$x_{t} = \sqrt{{\overline{\alpha}}_{t}}x_{0} + \sqrt{1 - {\overline{\alpha}}_{t}}\varepsilon$
+，或者记为
+$x_t = \gamma_t x_0 + \eta_t \varepsilon$
+，则有
+
+$$
+x_{0}
+= \frac{x_t - \eta_t \varepsilon}{\gamma_t}
+= \frac{x_{t} - \sqrt{\left( 1 - {\overline{\alpha}}_{t} \right)}\varepsilon}{\sqrt{{\overline{\alpha}}_{t}}}
+,\quad \varepsilon \sim \mathcal{N}(0,I)
+$$
+
+所以可以改为预测 $\varepsilon$ 而非 $x_{0}$。则loss变为
+
+相比预测原始数据，噪声 $\varepsilon$ 的分布更稳定（标准高斯分布），因此更容易学习。但是，预测噪声和预测原始数据是等价的，两者可以通过简单的线性变换互相转换.
+
+显然，只要预测目标和$x_t$是“线性可逆”的，就都是(b)合法的等价形式。在Stable Diffusion等现代Diffusion Model中，更常见的做法是使用v-parameterization，即预测一个线性组合：
+
+$$
+v_t := \gamma_t \varepsilon - \eta_t x_{0}
+$$
+
+注意到 $\gamma_t^2 + \eta_t^2 = 1$，因此在 $x_0$-$\varepsilon$ 空间中，$x_t$ 对应一个1/4单位圆上的点，(1,0) 为数据 $x_0$，对应 $t=0$，(0,1) 为噪声 $\varepsilon$，对应 $t=T$。$v_t$ 就是这个旋转过程中的角速度，描述了从噪声流向数据的方向。
 
 # Score-based Diffusion Model & Langevin dynamics
 
@@ -168,17 +275,21 @@ $$U(x) = - kT\log p(x) + \text{ constant},$$
 
 代入得
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 dx_{t} & = \frac{kT}{\gamma}\nabla_{x}\log p\left( x_{t} \right)dt + \sqrt{\frac{2kT}{\gamma}}dW_{t} \\
  & = \frac{kT}{\gamma}\nabla_{x}\log p\left( x_{t} \right)dt + \sqrt{\frac{2kT}{\gamma}}dW_{t}
-\end{aligned}$$
+\end{aligned}
+$$
 
 方程在离散时间 $x_{k} ≔ x(k\tau)$ 下的形式为
 
-$$\begin{array}{rlr}
+$$
+\begin{array}{rlr}
 x_{k + 1} - x_{k} & = - \frac{kT}{\gamma}\tau\nabla_{x}\log p\left( x_{t} \right) + \sqrt{\frac{2kT}{\gamma}\tau}\xi\quad & ,\xi \sim \mathcal{N}(0,I) \\
  & = - \eta\nabla_{x}\log p\left( x_{t} \right) + \sqrt{2\eta}\xi & ,\xi \sim \mathcal{N}(0,I)
-\end{array}$$
+\end{array}
+$$
 
 其中 $\eta = \frac{kT}{\gamma}\tau$ 是步长. 回忆 $x_{t}$
 描述的是粒子的随机位置，因此
@@ -249,7 +360,7 @@ $s > 1$，可以增强条件信息的影响，得到更符合条件的样本生�
 
 # Classifier-Free Diffusion Guidance (CFG)
 
-不使用分类器，而是定义两种去噪模型的score：
+不使用分类器，而是定义两种去噪模型的 score：
 
 - 条件模型
   $\nabla_{x}\log p_{\theta}\left( x_{t},c \right) = \frac{1}{\sigma^{2}}\left( D_{\theta}\left( x_{t},\sigma,c \right) - x_{0} \right)$
@@ -260,11 +371,13 @@ $s > 1$，可以增强条件信息的影响，得到更符合条件的样本生�
 其中 $D_{\theta}$ 是去噪器, 使用一个 null
 条件（如全零向量）来表示无条件模型. 则上式的等价形式
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \nabla_{x}\log p\left( x|c \right) & = \nabla_{x}\log p(x) + S\nabla_{x}\log p\left( c|x \right) \\
  & = \nabla_{x}\log p_{\theta}\left( x_{t} \right) + S\left( \nabla_{x}\log p_{\theta}\left( x_{t},c \right) - \nabla_{x}\log p_{\theta}\left( x_{t} \right) \right) \\
  & = S\nabla_{x}\log p_{\theta}\left( x_{t},c \right) + (1 - S)\nabla_{x}\log p_{\theta}\left( x_{t} \right) \\
  & = \frac{1}{\sigma^{2}}\left( SD_{\theta}\left( x_{t},\sigma,c \right) + (1 - S)D_{\theta}\left( x_{t},\sigma \right) - x_{0} \right)
-\end{aligned}$$
+\end{aligned}
+$$
 
 即用二者的凸组合来进行去噪采样.
